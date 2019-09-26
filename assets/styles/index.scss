@@ -12,6 +12,21 @@
   width: 500px;
 }
 
+.records {
+  font-size: 24px;
+  left: 0;
+  position: fixed;
+}
+
+.new-game-button {
+  font-size: 18px;
+  margin: 10px auto;
+}
+
+.sign-out-button {
+  float: right;
+}
+
 .form-container {
   display: flex;
   flex-direction: row;
@@ -31,11 +46,13 @@
 }
 
 .sign-up-btn {
-  margin-top: 2px;
+  font-size: 16px;
+  margin-top: 6px;
 }
 
 .sign-in-btn {
-  margin-top: 2px;
+  font-size: 16px;
+  margin-top: 6px;
 }
 
 .header {
@@ -47,7 +64,6 @@
 }
 
 h1 {
-  border: 2px solid black;
   margin-top: 20px;
   text-align: center;
 }
@@ -57,8 +73,14 @@ h1 {
 }
 
 .form-label {
+  font-size: 40px;
   font-weight: bold;
   margin-bottom: 0;
+  margin-top: 20px;
+}
+
+input {
+  font-size: 25px;
 }
 
 .cell-1 {
@@ -97,15 +119,7 @@ h1 {
   grid-area: 3 3 4 4;
 }
 
-.new-game-button {
-  display: block;
-  font-size: 18px;
-  margin: 10px auto;
-}
 
-.sign-out-button {
-  float: right;
-}
 
 .success {
   color: $success-green;

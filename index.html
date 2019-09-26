@@ -16,13 +16,17 @@
         <h1>TIC-TAC-TOE</h1>
         <button id="sign-out" class="sign-out-button">Sign-Out</button>
       </div>
+      <h3 id="status-message" class="status-message"></h3>
       <div class="form-container">
+        <div class="records">
+          <p id="record-display">Games Played: </p>
+        </div>
         <div class="sign-in">
           <form id="sign-in-form" class="sign-in-form">
             <p class="form-label">Email</p>
-            <input name="credentials[email]" type="email">
+            <input required name="credentials[email]" type="email">
             <p class="form-label">Password</p>
-            <input name="credentials[password]" type="password">
+            <input required name="credentials[password]" type="password">
             <br />
             <button class="sign-in-btn">Sign-In</button>
           </form>
@@ -30,27 +34,26 @@
         <div class="sign-up">
           <form id="sign-up-form" class="sign-up-form">
             <p class="form-label">Email</p>
-            <input name="credentials[email]" type="email">
+            <input required name="credentials[email]" type="email">
             <p class="form-label">Password</p>
-            <input name="credentials[password]" type="password">
+            <input required name="credentials[password]" type="password">
             <p class="form-label">Confirm Password</p>
-            <input name="credentials[password_confirmation]" type="password">
+            <input required name="credentials[password_confirmation]" type="password">
             <br />
             <button class="sign-up-btn">Sign-Up</button>
           </form>
         </div>
       </div>
-      <h3 id="status-message" class="status-message">Success</h3>
       <div class="grid-container game-board">
-          <button class="cell-1" data-index="0">x</button>
-          <button class="cell-2" data-index="1">x</button>
-          <button class="cell-3" data-index="2">x</button>
-          <button class="cell-4" data-index="3">x</button>
-          <button class="cell-5" data-index="4">x</button>
-          <button class="cell-6" data-index="5">x</button>
-          <button class="cell-7" data-index="6">x</button>
-          <button class="cell-8" data-index="7">x</button>
-          <button class="cell-9" data-index="8">x</button>
+          <button class="game-button cell-1" data-index="0"></button>
+          <button class="game-button cell-2" data-index="1"></button>
+          <button class="game-button cell-3" data-index="2"></button>
+          <button class="game-button cell-4" data-index="3"></button>
+          <button class="game-button cell-5" data-index="4"></button>
+          <button class="game-button cell-6" data-index="5"></button>
+          <button class="game-button cell-7" data-index="6"></button>
+          <button class="game-button cell-8" data-index="7"></button>
+          <button class="game-button cell-9" data-index="8"></button>
       </div>
       <button class="new-game-button">New Game</button>
     </body>

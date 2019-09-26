@@ -3,19 +3,61 @@
 const config = require('./../config.js')
 const store = require('../store.js')
 
-const updateGame = (cellIndex, cellValue) => {
+const index = () => {
+  return $.ajax({
+    url: config.apiUrl + `/games`,
+    method: 'GET',
+    headers: {
+      Authorization: 'Token token=' + store.user.token
+    }
+  })
+}
+
+const updateGame = (cellIndex, cellValue, over) => {
   const dataObj = {
     'game': {
       'cell': {
         'index': `${cellIndex}`,
         'value': `${cellValue}`
-      }
+      },
+      'over': 'false'
     }
   }
+
+  if (over === '') {
+    return $.ajax({
+      url: config.apiUrl + `/games/${store.game.id}`,
+      method: 'PATCH',
+      headers: {
+        Authorization: 'Token token=' + store.user.token
+      },
+      data: dataObj
+    })
+  } else if (over === true && cellIndex === '' & cellValue === '') {
+    console.log('entered')
+    return $.ajax({
+      url: config.apiUrl + `/games/${store.game.id}`,
+      method: 'PATCH',
+      headers: {
+        Authorization: 'Token token=' + store.user.token
+      },
+      data: {
+        'game': {
+          'over': true
+        }
+      }
+    })
+  }
+}
+
+const createGame = () => {
   return $.ajax({
-    url: config.apiUrl + `/games/${store.game.id}`,
-    method: 'PATCH',
-    data: JSON.stringify(dataObj)
+    url: config.apiUrl + `/games`,
+    method: 'POST',
+    headers: {
+      Authorization: 'Token token=' + store.user.token
+    },
+    data: '{}'
   })
 }
 
@@ -45,9 +87,23 @@ const signOut = () => {
   })
 }
 
+const changePassword = (formData) => {
+  return $.ajax({
+    method: 'PATCH',
+    url: config.apiUrl + '/change-password',
+    headers: {
+      Authorization: 'Token token=' + store.user.token
+    },
+    data: formData
+  })
+}
+
 module.exports = {
   updateGame,
   signUp,
   signIn,
-  signOut
+  signOut,
+  changePassword,
+  createGame,
+  index
 }

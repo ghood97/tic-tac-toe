@@ -8,7 +8,11 @@ const events = require('./game/events.js')
 
 $(() => {
   $('.game-board').find('button').on('click', events.onCellClick)
+  $('#sign-out').on('click', events.onSignOut)
+  $('.game-board').hide()
+  $('.new-game-button').hide()
+  $('#sign-out').hide()
   $('#sign-up-form').on('submit', events.onSignUp)
   $('#sign-in-form').on('submit', events.onSignIn)
-  $('#sign-out').on('click', events.onSignOut)
+  $('.new-game-button').on('click', events.onCreateGame)
 })
