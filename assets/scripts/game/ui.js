@@ -119,6 +119,7 @@ const onSignOutSuccess = (response) => {
   // change ui to sign in view
   $('.game-board').hide()
   $('.new-game-button').hide()
+  $('#change-pw-form').trigger('reset')
   $('#change-pw-form').hide()
   $('#sign-out').hide()
   $('.form-container').show()
