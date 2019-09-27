@@ -27,6 +27,7 @@ As I havent run into any unsolved problems, I would like to some how return a re
 -- As an inexperienced user, I want to be able to see helpful prompts while playing the game.<br />
 
 
-Wireframe:
+<h3>Wireframe</h3>
+
 [View1](https://i.imgur.com/066JWiZ.jpg?1)<br />
 [View2](https://i.imgur.com/GhvgP6l.jpg?1)
