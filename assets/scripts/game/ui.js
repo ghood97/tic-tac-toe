@@ -61,6 +61,7 @@ const onGetRecordSuccess = (response) => {
 const onCreateGameSuccess = (response) => {
   store.game = response.game
   updateBoard()
+  api.index().then(onGetRecordSuccess).catch(console.error())
   successMessage(`Player X, it's your turn.`)
 }
 
