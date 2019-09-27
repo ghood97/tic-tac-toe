@@ -2,10 +2,11 @@
 
 const config = require('./../config.js')
 const store = require('../store.js')
+// const ui = require('./ui.js')
 
 const index = () => {
   return $.ajax({
-    url: config.apiUrl + `/games`,
+    url: config.apiUrl + '/games',
     method: 'GET',
     headers: {
       Authorization: 'Token token=' + store.user.token
@@ -21,6 +22,12 @@ const updateGame = (cellIndex, cellValue, over) => {
         'value': `${cellValue}`
       },
       'over': 'false'
+    }
+  }
+
+  const finalUpdate = {
+    game: {
+      over: true
     }
   }
 
@@ -41,11 +48,8 @@ const updateGame = (cellIndex, cellValue, over) => {
       headers: {
         Authorization: 'Token token=' + store.user.token
       },
-      data: {
-        'game': {
-          'over': true
-        }
-      }
+      // Below code is not changing over to true
+      data: finalUpdate
     })
   }
 }

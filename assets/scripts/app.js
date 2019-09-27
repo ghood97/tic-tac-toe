@@ -10,6 +10,7 @@ $(() => {
   $('.game-board').find('button').on('click', events.onCellClick)
   $('#sign-out').on('click', events.onSignOut)
   $('.game-board').hide()
+  $('.records').hide()
   $('.new-game-button').hide()
   $('#sign-out').hide()
   $('#sign-up-form').on('submit', events.onSignUp)

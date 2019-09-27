@@ -11,7 +11,6 @@ const onCellClick = (event) => {
   const cellIndex = $(event.target).attr('data-index')
   const cellValue = store.turn % 2 ? 'x' : 'o'
   api.updateGame(cellIndex, cellValue, '').then(ui.onUpdateSuccess).catch(console.error())
-  console.log(event)
 }
 
 const onCreateGame = (event) => {

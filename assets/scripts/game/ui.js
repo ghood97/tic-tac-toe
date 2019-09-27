@@ -24,9 +24,6 @@ const updateBoard = () => {
     const value = store.game.cells[btnIndex]
     $(this).html(value)
   })
-  // api.index().then((response) => {
-  //   store.totalGames =
-  // }).catch()
 }
 
 const successMessage = (newText) => {
@@ -54,7 +51,13 @@ const onUpdateSuccess = (response) => {
     store.turn = store.turn + 1
     const playerTurn = store.turn % 2 ? 'x' : 'o'
     successMessage(`Player ${playerTurn.toUpperCase()}, it's your turn.`)
+    console.log(store.game)
   }
+}
+
+const onGetRecordSuccess = (response) => {
+  store.totalGames = response
+  $('#record-display').html('Games Played: ' + store.totalGames.games.length)
 }
 
 const onCreateGameSuccess = (response) => {
@@ -81,9 +84,11 @@ const onSignInSuccess = (response) => {
   // save user from response inside of store for later use
   successMessage('Signed In Successfully')
   store.user = response.user
+  api.index().then(onGetRecordSuccess).catch(console.error())
   $('#sign-in-form').trigger('reset')
   // Change ui to play game
   $('.game-board').show()
+  $('.records').show()
   $('.new-game-button').css('display', 'block')
   $('#sign-out').show()
   $('.form-container').hide()
@@ -93,6 +98,7 @@ const onSignInSuccess = (response) => {
 
 const onSignInFailure = (response) => {
   failureMessage('Sign-In Failure! Try Again')
+  $('#sign-in-form').trigger('reset')
 }
 
 const onSignOutSuccess = (response) => {
@@ -103,6 +109,8 @@ const onSignOutSuccess = (response) => {
   $('.new-game-button').hide()
   $('#sign-out').hide()
   $('.form-container').show()
+  $('.records').hide()
+  $('#record-display').html('Games Played: ')
 }
 
 const onSignOutFailure = (response) => {
