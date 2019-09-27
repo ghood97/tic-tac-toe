@@ -40,7 +40,7 @@ const onSignIn = (event) => {
   event.preventDefault()
   const form = event.target
   const formData = getFormFields(form)
-  api.signIn(formData).then(ui.onSignInSuccess).catch(ui.onSignInFailure)
+  api.signIn(formData, '').then(ui.onSignInSuccess).catch(ui.onSignInFailure)
 }
 
 const onSignOut = (event) => {
