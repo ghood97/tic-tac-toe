@@ -18,6 +18,15 @@ const checkWinner = () => {
   return false
 }
 
+const boardFull = () => {
+  for (let i = 0; i < store.game.cells.length; i++) {
+    if (store.game.cells[i] === '') {
+      return false
+    }
+  }
+  return true
+}
+
 const updateBoard = () => {
   $('.game-button').each(function () {
     const btnIndex = $(this).attr('data-index')
@@ -44,12 +53,12 @@ const onUpdateSuccess = (response) => {
   if (checkWinner()) {
     const playerTurn = store.turn % 2 ? 'x' : 'o'
     successMessage(`Player ${playerTurn.toUpperCase()} Wins! Click new game to play again.`)
-    console.log('GAME OVER: ', store.game)
+  } else if (boardFull()) {
+    successMessage(`Tie game! Click new game to play again.`)
   } else {
     store.turn = store.turn + 1
     const playerTurn = store.turn % 2 ? 'x' : 'o'
     successMessage(`Player ${playerTurn.toUpperCase()}, it's your turn.`)
-    console.log('GAME NOT OVER: ', store.game)
   }
 }
 
@@ -60,8 +69,9 @@ const onGetRecordSuccess = (response) => {
 
 const onCreateGameSuccess = (response) => {
   store.game = response.game
+  store.turn = 1
   updateBoard()
-  api.index().then(onGetRecordSuccess).catch(console.error())
+  api.index().then(onGetRecordSuccess).catch()
   successMessage(`Player X, it's your turn.`)
 }
 
@@ -75,20 +85,23 @@ const onSignUpSuccess = (response) => {
 }
 
 const onSignUpFailure = (response) => {
-  failureMessage(`Sign-Up Failed!:  --${response.responseText}`)
+  failureMessage(`Sign-Up Failed! Try Again!`)
+  $('#sign-up-form').trigger('reset')
 }
 
 const onSignInSuccess = (response) => {
   // save user from response inside of store for later use
   successMessage('Signed In Successfully')
   store.user = response.user
-  api.index().then(onGetRecordSuccess).catch(console.error())
+  api.index().then(onGetRecordSuccess).catch()
   $('#sign-in-form').trigger('reset')
   // Change ui to play game
   $('.game-board').show()
   $('.records').show()
   $('.new-game-button').css('display', 'block')
   $('#sign-out').show()
+  $('#change-pw-form').show()
+  $('#change-pw').show()
   $('.form-container').hide()
   $('#status-message').html('')
   api.createGame().then(onCreateGameSuccess).catch(onCreateGameFailure)
@@ -101,10 +114,12 @@ const onSignInFailure = (response) => {
 
 const onSignOutSuccess = (response) => {
   successMessage('Sign-Out Successful!')
+  setTimeout(welcomeMessage, 3000)
   delete store.user
   // change ui to sign in view
   $('.game-board').hide()
   $('.new-game-button').hide()
+  $('#change-pw-form').hide()
   $('#sign-out').hide()
   $('.form-container').show()
   $('.records').hide()
@@ -113,6 +128,29 @@ const onSignOutSuccess = (response) => {
 
 const onSignOutFailure = (response) => {
   failureMessage(`Sign-Out Failure!: --${response.statusText}`)
+}
+
+const welcomeMessage = () => {
+  successMessage('Welcome! Sign-In or Sign-up to play!')
+}
+
+const resetChangePw = () => {
+  $('#pw-status-message').html('')
+}
+
+const onChangePasswordSuccess = (response) => {
+  $('#change-pw-form').trigger('reset')
+  $('#pw-status-message').html('Change Password Success!')
+  $('#pw-status-message').removeClass('failure')
+  $('#pw-status-message').addClass('success')
+  setTimeout(resetChangePw, 5000)
+}
+
+const onChangePasswordFailure = (response) => {
+  $('#change-pw-form').trigger('reset')
+  $('#status-message').html('Change Password Failed!')
+  $('#status-message').removeClass('success')
+  $('#status-message').addClass('failure')
 }
 
 module.exports = {
@@ -127,5 +165,8 @@ module.exports = {
   onCreateGameFailure,
   successMessage,
   failureMessage,
-  checkWinner
+  checkWinner,
+  boardFull,
+  onChangePasswordSuccess,
+  onChangePasswordFailure
 }

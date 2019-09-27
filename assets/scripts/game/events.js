@@ -12,13 +12,15 @@ const onCellClick = (event) => {
     const cellValue = store.turn % 2 ? 'x' : 'o'
     store.game.cells[cellIndex] = cellValue
     if (ui.checkWinner()) {
-      api.updateGame(cellIndex, cellValue, true).then(ui.onUpdateSuccess).catch(console.error())
+      api.updateGame(cellIndex, cellValue, true).then(ui.onUpdateSuccess).catch()
+    } else if (ui.boardFull()) {
+      api.updateGame(cellIndex, cellValue, true).then(ui.onUpdateSuccess).catch()
+      ui.successMessage(`Tie Game! Click new game to play again.`)
     } else {
-      api.updateGame(cellIndex, cellValue, false).then(ui.onUpdateSuccess).catch(console.error())
+      api.updateGame(cellIndex, cellValue, false).then(ui.onUpdateSuccess).catch()
     }
-  } else if (ui.checkWinner()) {
-    const playerTurn = store.turn % 2 ? 'x' : 'o'
-    ui.successMessage(`Player ${playerTurn.toUpperCase()} Wins! Click new game to play again.`)
+  } else if ($(event.target).text() !== '' && ui.checkWinner() === false) {
+    ui.failureMessage('Please pick an open square!')
   }
 }
 
@@ -46,10 +48,18 @@ const onSignOut = (event) => {
   api.signOut().then(ui.onSignOutSuccess).catch(ui.onSignOutFailure)
 }
 
+const onChangePassword = (event) => {
+  event.preventDefault()
+  const form = event.target
+  const formData = getFormFields(form)
+  api.changePassword(formData).then(ui.onChangePasswordSuccess).catch(ui.onChangePasswordFailure)
+}
+
 module.exports = {
   onCellClick,
   onSignUp,
   onSignIn,
   onSignOut,
-  onCreateGame
+  onCreateGame,
+  onChangePassword
 }
