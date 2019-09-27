@@ -7,12 +7,18 @@ const getFormFields = require('../../../lib/get-form-fields.js')
 
 const onCellClick = (event) => {
   event.preventDefault()
-  if ($(event.target).text() === '') {
+  if ($(event.target).text() === '' && ui.checkWinner() === false) {
     const cellIndex = $(event.target).attr('data-index')
     const cellValue = store.turn % 2 ? 'x' : 'o'
-    api.updateGame(cellIndex, cellValue, '').then(ui.onUpdateSuccess).catch(console.error())
-  } else {
-    ui.failureMessage('Please pick and empty space!')
+    store.game.cells[cellIndex] = cellValue
+    if (ui.checkWinner()) {
+      api.updateGame(cellIndex, cellValue, true).then(ui.onUpdateSuccess).catch(console.error())
+    } else {
+      api.updateGame(cellIndex, cellValue, false).then(ui.onUpdateSuccess).catch(console.error())
+    }
+  } else if (ui.checkWinner()) {
+    const playerTurn = store.turn % 2 ? 'x' : 'o'
+    ui.successMessage(`Player ${playerTurn.toUpperCase()} Wins! Click new game to play again.`)
   }
 }
 

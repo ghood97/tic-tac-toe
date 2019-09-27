@@ -6,7 +6,7 @@ const store = require('../store.js')
 
 const index = () => {
   return $.ajax({
-    url: config.apiUrl + '/games',
+    url: config.apiUrl + '/games?over=true',
     method: 'GET',
     headers: {
       Authorization: 'Token token=' + store.user.token
@@ -21,37 +21,17 @@ const updateGame = (cellIndex, cellValue, over) => {
         'index': `${cellIndex}`,
         'value': `${cellValue}`
       },
-      'over': false
+      'over': `${over}`
     }
   }
-
-  const finalUpdate = {
-    'game': {
-      'over': true
-    }
-  }
-
-  if (over === '') {
-    return $.ajax({
-      url: config.apiUrl + `/games/${store.game.id}`,
-      method: 'PATCH',
-      headers: {
-        Authorization: 'Token token=' + store.user.token
-      },
-      data: dataObj
-    })
-  } else if (over === true && cellIndex === '' & cellValue === '') {
-    console.log('entered')
-    return $.ajax({
-      url: config.apiUrl + `/games/${store.game.id}`,
-      method: 'PATCH',
-      headers: {
-        Authorization: 'Token token=' + store.user.token
-      },
-      // Below code is not changing over to true
-      data: finalUpdate
-    })
-  }
+  return $.ajax({
+    url: config.apiUrl + `/games/${store.game.id}`,
+    method: 'PATCH',
+    headers: {
+      Authorization: 'Token token=' + store.user.token
+    },
+    data: dataObj
+  })
 }
 
 const createGame = () => {

@@ -1,7 +1,7 @@
 'use strict'
 
 const store = require('../store.js')
-const events = require('./events.js')
+// const events = require('./events.js')
 const api = require('./api.js')
 
 const checkWinner = () => {
@@ -42,11 +42,6 @@ const onUpdateSuccess = (response) => {
   store.game = response.game
   updateBoard()
   if (checkWinner()) {
-    api.updateGame('', '', true)
-      .then(function (response) {
-        store.game = response.game
-      })
-      .catch(failureMessage('ERROR! Try again.'))
     const playerTurn = store.turn % 2 ? 'x' : 'o'
     successMessage(`Player ${playerTurn.toUpperCase()} Wins! Click new game to play again.`)
     console.log('GAME OVER: ', store.game)
@@ -66,7 +61,6 @@ const onGetRecordSuccess = (response) => {
 const onCreateGameSuccess = (response) => {
   store.game = response.game
   updateBoard()
-  $('.game-board').find('button').on('click', events.onCellClick)
   successMessage(`Player X, it's your turn.`)
 }
 
@@ -131,5 +125,6 @@ module.exports = {
   onCreateGameSuccess,
   onCreateGameFailure,
   successMessage,
-  failureMessage
+  failureMessage,
+  checkWinner
 }
