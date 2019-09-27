@@ -64,7 +64,7 @@ const onUpdateSuccess = (response) => {
 
 const onGetRecordSuccess = (response) => {
   store.totalGames = response
-  $('#record-display').html('Games Played: ' + store.totalGames.games.length)
+  $('#record-display').html('Games Completed: ' + store.totalGames.games.length)
 }
 
 const onCreateGameSuccess = (response) => {
@@ -133,7 +133,7 @@ const onSignOutSuccess = (response) => {
   $('#sign-out').hide()
   $('.form-container').show()
   $('.records').hide()
-  $('#record-display').html('Games Played: ')
+  $('#record-display').html('Games Completed: ')
 }
 
 const onSignOutFailure = (response) => {
