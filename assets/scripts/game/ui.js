@@ -81,6 +81,15 @@ const onCreateGameFailure = (response) => {
 
 const onSignUpSuccess = (response) => {
   successMessage('Sign-Up Successful! Please Sign in to play.')
+  const passwordInput = $('#sign-up-password').val()
+  const emailInput = $('#sign-up-email').val()
+  const dataObj = {
+    'credentials': {
+      'email': `${emailInput}`,
+      'password': `${passwordInput}`
+    }
+  }
+  api.signIn('', dataObj).then(onSignInSuccess).catch(onSignInFailure)
   $('#sign-up-form').trigger('reset')
 }
 
