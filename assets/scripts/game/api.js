@@ -21,13 +21,13 @@ const updateGame = (cellIndex, cellValue, over) => {
         'index': `${cellIndex}`,
         'value': `${cellValue}`
       },
-      'over': 'false'
+      'over': false
     }
   }
 
   const finalUpdate = {
-    game: {
-      over: true
+    'game': {
+      'over': true
     }
   }
 

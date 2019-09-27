@@ -42,16 +42,19 @@ const onUpdateSuccess = (response) => {
   store.game = response.game
   updateBoard()
   if (checkWinner()) {
-    $('.game-board').find('button').off()
     api.updateGame('', '', true)
-    console.log(store.game)
+      .then(function (response) {
+        store.game = response.game
+      })
+      .catch(failureMessage('ERROR! Try again.'))
     const playerTurn = store.turn % 2 ? 'x' : 'o'
     successMessage(`Player ${playerTurn.toUpperCase()} Wins! Click new game to play again.`)
+    console.log('GAME OVER: ', store.game)
   } else {
     store.turn = store.turn + 1
     const playerTurn = store.turn % 2 ? 'x' : 'o'
     successMessage(`Player ${playerTurn.toUpperCase()}, it's your turn.`)
-    console.log(store.game)
+    console.log('GAME NOT OVER: ', store.game)
   }
 }
 
@@ -126,5 +129,7 @@ module.exports = {
   onSignOutSuccess,
   onSignOutFailure,
   onCreateGameSuccess,
-  onCreateGameFailure
+  onCreateGameFailure,
+  successMessage,
+  failureMessage
 }

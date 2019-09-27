@@ -7,10 +7,13 @@ const getFormFields = require('../../../lib/get-form-fields.js')
 
 const onCellClick = (event) => {
   event.preventDefault()
-
-  const cellIndex = $(event.target).attr('data-index')
-  const cellValue = store.turn % 2 ? 'x' : 'o'
-  api.updateGame(cellIndex, cellValue, '').then(ui.onUpdateSuccess).catch(console.error())
+  if ($(event.target).text() === '') {
+    const cellIndex = $(event.target).attr('data-index')
+    const cellValue = store.turn % 2 ? 'x' : 'o'
+    api.updateGame(cellIndex, cellValue, '').then(ui.onUpdateSuccess).catch(console.error())
+  } else {
+    ui.failureMessage('Please pick and empty space!')
+  }
 }
 
 const onCreateGame = (event) => {
