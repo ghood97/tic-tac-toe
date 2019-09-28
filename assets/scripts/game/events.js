@@ -12,12 +12,12 @@ const onCellClick = (event) => {
     const cellValue = store.turn % 2 ? 'x' : 'o'
     store.game.cells[cellIndex] = cellValue
     if (ui.checkWinner()) {
-      api.updateGame(cellIndex, cellValue, true).then(ui.onUpdateSuccess).catch()
+      api.updateGame(cellIndex, cellValue, true).then(ui.onUpdateSuccess).catch(ui.onUpdateFailure)
     } else if (ui.boardFull()) {
-      api.updateGame(cellIndex, cellValue, true).then(ui.onUpdateSuccess).catch()
+      api.updateGame(cellIndex, cellValue, true).then(ui.onUpdateSuccess).catch(ui.onUpdateFailure)
       ui.successMessage(`Tie Game! Click new game to play again.`)
     } else {
-      api.updateGame(cellIndex, cellValue, false).then(ui.onUpdateSuccess).catch()
+      api.updateGame(cellIndex, cellValue, false).then(ui.onUpdateSuccess).catch(ui.onUpdateFailure)
     }
   } else if ($(event.target).text() !== '' && ui.checkWinner() === false) {
     ui.failureMessage('Please pick an open square!')

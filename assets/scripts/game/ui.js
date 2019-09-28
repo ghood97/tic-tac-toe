@@ -47,18 +47,51 @@ const failureMessage = (newText) => {
   $('#status-message').addClass('failure')
 }
 
+const onUpdateFailure = () => {
+  failureMessage('Game failed to update. Try again.')
+}
+
 const onUpdateSuccess = (response) => {
   store.game = response.game
   updateBoard()
   if (checkWinner()) {
     const playerTurn = store.turn % 2 ? 'x' : 'o'
-    successMessage(`Player ${playerTurn.toUpperCase()} Wins! Click new game to play again.`)
+    if (playerTurn === 'o') {
+      successMessage('Computer Wins! Click new game to play again.')
+    } else {
+      successMessage(`Player ${playerTurn.toUpperCase()} Wins! Click new game to play again.`)
+    }
   } else if (boardFull()) {
     successMessage(`Tie game! Click new game to play again.`)
   } else {
     store.turn = store.turn + 1
-    const playerTurn = store.turn % 2 ? 'x' : 'o'
-    successMessage(`Player ${playerTurn.toUpperCase()}, it's your turn.`)
+    let playerTurn = store.turn % 2 ? 'x' : 'o'
+    // Computer AI
+    if (playerTurn === 'o') {
+      let isEmpty = false
+      let cellIndex = null
+      while (!isEmpty) {
+        const randCell = Math.floor(Math.random() * 9)
+        if (store.game.cells[randCell] === '') {
+          cellIndex = randCell
+          isEmpty = true
+        }
+      }
+      store.game.cells[cellIndex] = playerTurn
+      if (checkWinner()) {
+        failureMessage('Computer Wins! Click new Game to play again.')
+        api.updateGame(cellIndex, playerTurn, true).then(onUpdateSuccess).catch(onUpdateFailure)
+      } else if (boardFull()) {
+        successMessage('Tie game! Click new game to play again.')
+        api.updateGame(cellIndex, playerTurn, true).then(onUpdateSuccess).catch(onUpdateFailure)
+      } else {
+        api.updateGame(cellIndex, playerTurn, false).then(onUpdateSuccess).catch(onUpdateFailure)
+      }
+      updateBoard()
+      playerTurn = store.turn % 2 ? 'x' : 'o'
+      successMessage(`The Computer has made a move. Player X, it's your turn.`)
+    }
+    // successMessage(`Player ${playerTurn.toUpperCase()}, it's your turn.`)
   }
 }
 
