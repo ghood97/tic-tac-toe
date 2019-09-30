@@ -25,9 +25,17 @@
   font-size: 60px;
 }
 
-.new-game-button {
-  font-size: 24px;
-  margin: 10px auto;
+.new-game-container {
+  display: flex;
+  justify-content: center;
+}
+
+.new-game-button-human {
+  margin: 2px;
+}
+
+.new-game-button-ai {
+  margin: 2px;
 }
 
 .sign-out-button {

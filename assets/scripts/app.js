@@ -4,6 +4,7 @@
 // const example = require('./example')
 const events = require('./game/events.js')
 const ui = require('./game/ui.js')
+const store = require('./store.js')
 // use require without a reference to ensure a file is bundled
 // require('./example')
 
@@ -15,10 +16,18 @@ $(() => {
   $('.game-board').hide()
   $('#change-pw-form').hide()
   $('.records').hide()
-  $('.new-game-button').hide()
+  $('.new-game-button-human').hide()
+  $('.new-game-button-ai').hide()
   $('#sign-out').hide()
   $('#change-pw-form').hide()
   $('#sign-up-form').on('submit', events.onSignUp)
   $('#sign-in-form').on('submit', events.onSignIn)
-  $('.new-game-button').on('click', events.onCreateGame)
+  $('.new-game-button-human').on('click', (event) => {
+    store.ai = false
+    events.onCreateGame(event)
+  })
+  $('.new-game-button-ai').on('click', (event) => {
+    store.ai = true
+    events.onCreateGame(event)
+  })
 })

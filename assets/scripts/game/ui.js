@@ -56,7 +56,7 @@ const onUpdateSuccess = (response) => {
   updateBoard()
   if (checkWinner()) {
     const playerTurn = store.turn % 2 ? 'x' : 'o'
-    if (playerTurn === 'o') {
+    if (playerTurn === 'o' && store.ai === true) {
       successMessage('Computer Wins! Click new game to play again.')
     } else {
       successMessage(`Player ${playerTurn.toUpperCase()} Wins! Click new game to play again.`)
@@ -67,7 +67,7 @@ const onUpdateSuccess = (response) => {
     store.turn = store.turn + 1
     let playerTurn = store.turn % 2 ? 'x' : 'o'
     // Computer AI
-    if (playerTurn === 'o') {
+    if (playerTurn === 'o' && store.ai === true) {
       let isEmpty = false
       let cellIndex = null
       while (!isEmpty) {
@@ -91,7 +91,9 @@ const onUpdateSuccess = (response) => {
       playerTurn = store.turn % 2 ? 'x' : 'o'
       successMessage(`The Computer has made a move. Player X, it's your turn.`)
     }
-    // successMessage(`Player ${playerTurn.toUpperCase()}, it's your turn.`)
+    if (store.ai === false) {
+      successMessage(`Player ${playerTurn.toUpperCase()}, it's your turn.`)
+    }
   }
 }
 
@@ -140,7 +142,8 @@ const onSignInSuccess = (response) => {
   // Change ui to play game
   $('.game-board').show()
   $('.records').show()
-  $('.new-game-button').css('display', 'block')
+  $('.new-game-button-human').show()
+  $('.new-game-button-ai').show()
   $('#sign-out').show()
   $('#change-pw-form').show()
   $('#change-pw').show()
@@ -158,9 +161,14 @@ const onSignOutSuccess = (response) => {
   successMessage('Sign-Out Successful!')
   setTimeout(welcomeMessage, 3000)
   delete store.user
+  store.ai = false
+  $('.game-button').each(function () {
+    $(this).html('')
+  })
   // change ui to sign in view
   $('.game-board').hide()
-  $('.new-game-button').hide()
+  $('.new-game-button-human').hide()
+  $('.new-game-button-ai').hide()
   $('#change-pw-form').trigger('reset')
   $('#change-pw-form').hide()
   $('#sign-out').hide()
