@@ -16,6 +16,7 @@ $(() => {
   $('.game-board').hide()
   $('#change-pw-form').hide()
   $('.records').hide()
+  $('#game-id').hide()
   $('.new-game-button-human').hide()
   $('.new-game-button-ai').hide()
   $('#sign-out').hide()

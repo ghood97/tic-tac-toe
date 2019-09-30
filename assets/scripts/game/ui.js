@@ -102,6 +102,10 @@ const onGetRecordSuccess = (response) => {
   $('#record-display').html('Games Completed: ' + store.totalGames.games.length)
 }
 
+const onGetRecordFailure = (response) => {
+  $('#record-display').html('Games Completed: ERROR')
+}
+
 const onLookupSuccess = (response) => {
   $('.lookup-button').each(function () {
     const btnIndex = $(this).attr('data-display-index')
@@ -123,8 +127,9 @@ const onCreateGameSuccess = (response) => {
   store.game = response.game
   store.turn = 1
   updateBoard()
-  api.index().then(onGetRecordSuccess).catch()
+  api.index().then(onGetRecordSuccess).catch(onGetRecordFailure)
   successMessage(`Player X, it's your turn.`)
+  $('#game-id').html('Game ID: #' + store.game.id)
 }
 
 const onCreateGameFailure = (response) => {
@@ -154,12 +159,13 @@ const onSignInSuccess = (response) => {
   // save user from response inside of store for later use
   successMessage('Signed In Successfully')
   store.user = response.user
-  api.index().then(onGetRecordSuccess).catch()
+  api.index().then(onGetRecordSuccess).catch(onGetRecordFailure)
   $('#sign-in-form').trigger('reset')
   // Change ui to play game
   $('.lookup-container').show()
   $('.game-board').show()
   $('.records').show()
+  $('#game-id').show()
   $('.new-game-button-human').show()
   $('.new-game-button-ai').show()
   $('#sign-out').show()
@@ -198,6 +204,7 @@ const onSignOutSuccess = (response) => {
   $('#sign-out').hide()
   $('.form-container').show()
   $('.records').hide()
+  $('#game-id').hide()
   $('#record-display').html('Games Completed: ')
 }
 
