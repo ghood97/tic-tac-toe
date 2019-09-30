@@ -159,7 +159,7 @@ const onSignInFailure = (response) => {
 
 const onSignOutSuccess = (response) => {
   successMessage('Sign-Out Successful!')
-  setTimeout(welcomeMessage, 3000)
+  setTimeout(welcomeMessage, 1000)
   delete store.user
   store.ai = false
   $('.game-button').each(function () {
