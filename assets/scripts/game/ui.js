@@ -62,7 +62,7 @@ const onUpdateSuccess = (response) => {
       successMessage(`Player ${playerTurn.toUpperCase()} Wins! Click new game to play again.`)
     }
   } else if (boardFull()) {
-    successMessage(`Tie game! Click new game to play again.`)
+    successMessage(`Tie Game! Click new game to play again.`)
   } else {
     store.turn = store.turn + 1
     let playerTurn = store.turn % 2 ? 'x' : 'o'
@@ -82,7 +82,7 @@ const onUpdateSuccess = (response) => {
         failureMessage('Computer Wins! Click new Game to play again.')
         api.updateGame(cellIndex, playerTurn, true).then(onUpdateSuccess).catch(onUpdateFailure)
       } else if (boardFull()) {
-        successMessage('Tie game! Click new game to play again.')
+        successMessage('Tie Game! Click new game to play again.')
         api.updateGame(cellIndex, playerTurn, true).then(onUpdateSuccess).catch(onUpdateFailure)
       } else {
         api.updateGame(cellIndex, playerTurn, false).then(onUpdateSuccess).catch(onUpdateFailure)
