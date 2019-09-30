@@ -102,6 +102,23 @@ const onGetRecordSuccess = (response) => {
   $('#record-display').html('Games Completed: ' + store.totalGames.games.length)
 }
 
+const onLookupSuccess = (response) => {
+  $('.lookup-button').each(function () {
+    const btnIndex = $(this).attr('data-display-index')
+    const value = response.game.cells[btnIndex]
+    $(this).html(value)
+  })
+  $('#lookup-status').text('Game lookup success!')
+  $('#lookup-status').removeClass('failure')
+  $('#lookup-status').addClass('success')
+}
+
+const onLookupFailure = (response) => {
+  $('#lookup-status').text('Game lookup failed! Try again.')
+  $('#lookup-status').removeClass('success')
+  $('#lookup-status').addClass('failure')
+}
+
 const onCreateGameSuccess = (response) => {
   store.game = response.game
   store.turn = 1
@@ -140,6 +157,7 @@ const onSignInSuccess = (response) => {
   api.index().then(onGetRecordSuccess).catch()
   $('#sign-in-form').trigger('reset')
   // Change ui to play game
+  $('.lookup-container').show()
   $('.game-board').show()
   $('.records').show()
   $('.new-game-button-human').show()
@@ -165,6 +183,12 @@ const onSignOutSuccess = (response) => {
   $('.game-button').each(function () {
     $(this).html('')
   })
+  $('.lookup-button').each(function () {
+    $(this).html('')
+  })
+  $('.lookup-container').hide()
+  $('.lookup-container').trigger('reset')
+  $('#lookup-status').text('')
   // change ui to sign in view
   $('.game-board').hide()
   $('.new-game-button-human').hide()
@@ -219,5 +243,7 @@ module.exports = {
   checkWinner,
   boardFull,
   onChangePasswordSuccess,
-  onChangePasswordFailure
+  onChangePasswordFailure,
+  onLookupSuccess,
+  onLookupFailure
 }

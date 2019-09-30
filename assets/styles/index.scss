@@ -17,12 +17,85 @@ body {
   width: 390px;
 }
 
+.lookup-display {
+  border: 2px solid black;
+  display: grid;
+  grid-template-columns: 3fr 3fr 3fr;
+  grid-template-rows: 3fr 3fr 3fr;
+  height: 200px;
+  width: 200px;
+}
+
+.lookup-container {
+  display: inline;
+  left: 0;
+  position: fixed;
+}
+
 .records {
   display: flex;
   font-size: 24px;
   font-weight: bold;
   justify-content: center;
   text-align: center;
+}
+
+.lookup-label {
+  margin: 3px;
+}
+
+.lookup-id {
+  margin: 3px;
+  width: 115px;
+}
+
+.lookup-submit {
+  border: 2px solid $black;
+  margin: 3px;
+}
+
+.lookup-button {
+  align-items: center;
+  border: 2px solid $black;
+  display: flex;
+  font-size: 24px;
+  justify-content: center;
+}
+
+.lookup-cell-1 {
+  grid-area: 1 1 2 2;
+}
+
+.lookup-cell-2 {
+  grid-area: 1 2 2 3;
+}
+
+.lookup-cell-3 {
+  grid-area: 1 3 2 4;
+}
+
+.lookup-cell-4 {
+  grid-area: 2 1 3 2;
+}
+
+.lookup-cell-5 {
+  grid-area: 2 2 3 3;
+}
+
+.lookup-cell-6 {
+  grid-area: 2 3 3 4;
+}
+
+.lookup-cell-7 {
+  grid-area: 3 1 4 2;
+}
+
+.lookup-cell-8 {
+  grid-area: 3 2 4 3;
+}
+
+.lookup-cell-9 {
+  grid-area: 3 3 4 4;
 }
 
 button {
@@ -73,8 +146,11 @@ button {
   background-color: $white;
   border: 2px solid $black;
   border-radius: 20px;
-  float: left;
+  bottom: 0;
+  display: inline;
+  left: 0;
   margin-bottom: 2px;
+  position: fixed;
   text-align: center;
 }
 

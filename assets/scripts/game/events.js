@@ -24,6 +24,15 @@ const onCellClick = (event) => {
   }
 }
 
+const onLookup = (event) => {
+  event.preventDefault()
+  $('.lookup-button').each(function () {
+    $(this).html('')
+  })
+  const id = $('#lookup-id').val()
+  api.lookupGame(id).then(ui.onLookupSuccess).catch(ui.onLookupFailure)
+}
+
 const onCreateGame = (event) => {
   event.preventDefault()
   api.createGame().then(ui.onCreateGameSuccess).catch(ui.onCreateGameFilure)
@@ -61,5 +70,6 @@ module.exports = {
   onSignIn,
   onSignOut,
   onCreateGame,
-  onChangePassword
+  onChangePassword,
+  onLookup
 }

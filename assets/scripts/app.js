@@ -20,6 +20,8 @@ $(() => {
   $('.new-game-button-ai').hide()
   $('#sign-out').hide()
   $('#change-pw-form').hide()
+  $('.lookup-container').hide()
+  $('.lookup-container').on('submit', events.onLookup)
   $('#sign-up-form').on('submit', events.onSignUp)
   $('#sign-in-form').on('submit', events.onSignIn)
   $('.new-game-button-human').on('click', (event) => {
