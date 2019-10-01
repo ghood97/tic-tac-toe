@@ -30,6 +30,6 @@ As I havent run into any unsolved problems, I would like to some how return a re
 
 <h3>Wireframe</h3>
 
-<a href="https://imgur.com/GhvgP6l"><img src="https://i.imgur.com/GhvgP6l.jpg?1" title="wireframe-1" /></a>
+<img src="https://i.imgur.com/GhvgP6l.jpg?1" title="wireframe-1" />
 <hr />
-<a href="https://imgur.com/066JWiZ"><img src="https://i.imgur.com/066JWiZ.jpg?1" title="wireframe-2" /></a>
+<img src="https://i.imgur.com/066JWiZ.jpg?1" title="wireframe-2" />
