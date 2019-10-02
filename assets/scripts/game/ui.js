@@ -18,6 +18,42 @@ const checkWinner = () => {
   return false
 }
 
+const aiWinMoveIndex = () => {
+  const board = store.game.cells
+  const solutions = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]]
+  for (let i = 0; i < solutions.length; i++) {
+    const first = board[solutions[i][0]]
+    const second = board[solutions[i][1]]
+    const third = board[solutions[i][2]]
+    if (first === second && first === 'o' && third === '') {
+      return solutions[i][2]
+    } else if (second === third && second === 'o' && first === '') {
+      return solutions[i][0]
+    } else if (first === third && first === 'o' && second === '') {
+      return solutions[i][1]
+    }
+  }
+  return -1
+}
+
+const aiBlockWinIndex = () => {
+  const board = store.game.cells
+  const solutions = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]]
+  for (let i = 0; i < solutions.length; i++) {
+    const first = board[solutions[i][0]]
+    const second = board[solutions[i][1]]
+    const third = board[solutions[i][2]]
+    if (first === second && first === 'x' && third === '') {
+      return solutions[i][2]
+    } else if (second === third && second === 'x' && first === '') {
+      return solutions[i][0]
+    } else if (first === third && first === 'x' && second === '') {
+      return solutions[i][1]
+    }
+  }
+  return -1
+}
+
 const boardFull = () => {
   for (let i = 0; i < store.game.cells.length; i++) {
     if (store.game.cells[i] === '') {
@@ -68,15 +104,22 @@ const onUpdateSuccess = (response) => {
     let playerTurn = store.turn % 2 ? 'x' : 'o'
     // Computer AI
     if (playerTurn === 'o' && store.ai === true) {
-      let isEmpty = false
       let cellIndex = null
-      while (!isEmpty) {
-        const randCell = Math.floor(Math.random() * 9)
-        if (store.game.cells[randCell] === '') {
-          cellIndex = randCell
-          isEmpty = true
+      if (aiWinMoveIndex() !== -1) {
+        cellIndex = aiWinMoveIndex()
+      } else if (aiBlockWinIndex() !== -1) {
+        cellIndex = aiBlockWinIndex()
+      } else {
+        let isEmpty = false
+        while (!isEmpty) {
+          const randCell = Math.floor(Math.random() * 9)
+          if (store.game.cells[randCell] === '') {
+            cellIndex = randCell
+            isEmpty = true
+          }
         }
       }
+
       store.game.cells[cellIndex] = playerTurn
       if (checkWinner()) {
         failureMessage('Computer Wins! Click new Game to play again.')
@@ -230,9 +273,9 @@ const onChangePasswordSuccess = (response) => {
 
 const onChangePasswordFailure = (response) => {
   $('#change-pw-form').trigger('reset')
-  $('#status-message').html('Change Password Failed!')
-  $('#status-message').removeClass('success')
-  $('#status-message').addClass('failure')
+  $('#pw-status-message').html('Change Password Failed!')
+  $('#pw-status-message').removeClass('success')
+  $('#pw-status-message').addClass('failure')
 }
 
 module.exports = {
