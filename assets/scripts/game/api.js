@@ -15,7 +15,8 @@ const index = () => {
 }
 
 const lookupGame = (id) => {
-  return $.ajax({url: config.apiUrl + `/games/${id}`,
+  return $.ajax({
+    url: config.apiUrl + `/games/${id}`,
     method: 'GET',
     headers: {
       Authorization: 'Token token=' + store.user.token
