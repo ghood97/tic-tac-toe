@@ -214,7 +214,8 @@ const onSignInSuccess = (response) => {
   $('#sign-out').show()
   $('#change-pw-form').show()
   $('#change-pw').show()
-  $('.form-container').hide()
+  $('.change-pw-modal-trigger').removeClass('d-none')
+  $('#auth-container').addClass('d-none')
   $('#status-message').html('')
   api.createGame().then(onCreateGameSuccess).catch(onCreateGameFailure)
 }
@@ -245,7 +246,8 @@ const onSignOutSuccess = (response) => {
   $('#change-pw-form').trigger('reset')
   $('#change-pw-form').hide()
   $('#sign-out').hide()
-  $('.form-container').show()
+  $('#auth-container').removeClass('d-none')
+  $('.change-pw-modal-trigger').addClass('d-none')
   $('.records').hide()
   $('#game-id').hide()
   $('#record-display').html('Games Completed: ')
@@ -264,6 +266,7 @@ const resetChangePw = () => {
 }
 
 const onChangePasswordSuccess = (response) => {
+  $('#change-pw-modal').modal('toggle')
   $('#change-pw-form').trigger('reset')
   $('#pw-status-message').html('Change Password Success!')
   $('#pw-status-message').removeClass('failure')
@@ -272,10 +275,12 @@ const onChangePasswordSuccess = (response) => {
 }
 
 const onChangePasswordFailure = (response) => {
+  $('#change-pw-modal').modal('toggle')
   $('#change-pw-form').trigger('reset')
   $('#pw-status-message').html('Change Password Failed!')
   $('#pw-status-message').removeClass('success')
   $('#pw-status-message').addClass('failure')
+  setTimeout(resetChangePw, 5000)
 }
 
 module.exports = {

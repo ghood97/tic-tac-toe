@@ -13,6 +13,9 @@ $(() => {
   $('.game-board').find('button').on('click', events.onCellClick)
   $('#sign-out').on('click', events.onSignOut)
   $('#change-pw-form').on('submit', events.onChangePassword)
+  $('#change-pw-modal').on('show.bs.modal', event => {
+    $('#change-pw-form').trigger('reset')
+  })
   $('.game-board').hide()
   $('#change-pw-form').hide()
   $('.records').hide()
@@ -20,7 +23,6 @@ $(() => {
   $('.new-game-button-human').hide()
   $('.new-game-button-ai').hide()
   $('#sign-out').hide()
-  $('#change-pw-form').hide()
   $('.lookup-container').hide()
   $('.lookup-container').on('submit', events.onLookup)
   $('#sign-up-form').on('submit', events.onSignUp)
