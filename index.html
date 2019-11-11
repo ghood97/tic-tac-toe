@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <title>Example</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+
+      <!-- Do not add `link` tags-->
+      <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+
+      <!-- Do not add `script` tags-->
+      <script src="public/vendor.js" type="text/javascript" charset="utf-8" defer></script>
+      <script src="public/application.js" type="text/javascript" charset="utf-8" defer></script>
+    </head>
+    <body>
+      <nav class="navbar navbar-expand navbar-dark bg-dark">
+        <span class="navbar-brand mb-0 h1">TIC-TAC-TOE</span>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <button class="nav-link change-pw-modal-trigger d-none" data-toggle='modal' data-target='#change-pw-modal'>Change Password</button>
+            </li>
+            <li class="nav-item">
+              <button id="sign-out" class="nav-link sign-out-button">Sign-Out</button>
+            </li>
+          </ul>
+        </div>
+        <h3 id="status-message" class="status-message"></h3>
+      </nav>
+      <h3 id="pw-status-message" class="pw-status-message"></h3>
+      <div id="auth-container" class="auth-container">
+        <div class="row d-flex flex-row justify-content-center flex-wrap">
+          <div class="sign-in col-10 col-lg-5 d-flex justify-content-center">
+            <form id="sign-in-form" class="sign-in-form col-12">
+              <p class="form-label col-12">Email</p>
+              <input class="col-12 col-sm-8" required name="credentials[email]" type="email">
+              <p class="form-label col-12">Password</p>
+              <input class="col-12 col-sm-8" required name="credentials[password]" type="password">
+              <br />
+              <button class="sign-in-btn col-12 col-lg-6">Sign-In</button>
+            </form>
+          </div>
+          <div class="sign-up col-10 col-lg-5 d-flex justify-content-center">
+            <form id="sign-up-form" class="sign-up-form col-12">
+              <p class="form-label col-12">Email</p>
+              <input class="col-12 col-sm-8" required id="sign-up-email" name="credentials[email]" type="email">
+              <p class="form-label col-12">Password</p>
+              <input class="col-12 col-sm-8" required id="sign-up-password" name="credentials[password]" type="password">
+              <p class="form-label col-12">Confirm Password</p>
+              <input class="col-12 col-sm-8" required name="credentials[password_confirmation]" type="password">
+              <br />
+              <button class="sign-up-btn col-12 col-lg-6">Sign-Up</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- ---------------Change Password Modal----------------------->
+      <div class="modal" id='change-pw-modal' tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Enter A New Password</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form id='change-pw-form'>
+                <div class='form-group'>
+                  <label for='old-pw'>Old Password:</label>
+                  <input required type="password" id='old-pw' name='passwords[old]' class='form-control col-6' placeholder='Old Password'>
+                </div>
+      
+                <div class='form-group'>
+                  <label for='new-pw'>New Password:</label>
+                  <input required type="password" id='new-pw'  name='passwords[new]' class='form-control col-6' placeholder='New Password'>
+                </div>
+                <button class="btn btn-primary">Change Password</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- <form id="change-pw-form" class="change-pw-form">
+          <h3 id="pw-status-message" class="pw-status-message"></h3>
+          <h5 class = "form-label">Change Password</h5>
+          <p class="form-label-pw">Old Password</p>
+          <input required name="passwords[old]" type="password">
+          <p class="form-label-pw">New Password</p>
+          <input required name="passwords[new]" type="password">
+          <br />
+          <button id="change-pw-button" class="change-pw-button">Change-Password</button>
+        </form> -->
+      <!-------------------------------------------------------------->
+      <div class="body-container container d-flex justify-content-center flex-wrap my-5">
+        <div class="main-game-div col-12 col-lg-9">
+          <div class="grid-container game-board">
+              <button class="game-button cell-1" data-index="0"></button>
+              <button class="game-button cell-2" data-index="1"></button>
+              <button class="game-button cell-3" data-index="2"></button>
+              <button class="game-button cell-4" data-index="3"></button>
+              <button class="game-button cell-5" data-index="4"></button>
+              <button class="game-button cell-6" data-index="5"></button>
+              <button class="game-button cell-7" data-index="6"></button>
+              <button class="game-button cell-8" data-index="7"></button>
+              <button class="game-button cell-9" data-index="8"></button>
+          </div>
+          <div class="new-game-container">
+            <button id="new-game-button-human" class="new-game-button-human">New Game Vs. Human</button>
+            <button id="new-game-button-ai" class="new-game-button-ai">New Game Vs. AI</button>
+          </div>
+          <div class="records">
+            <p id="record-display">Games Completed: </p>
+          </div>
+          <p id="game-id" class="game-id">Game ID: </p>
+        </div>
+        <div class="lookup-div col-12 col-lg-3">
+          <form class="lookup-container col-10">
+            <p id="lookup-status"></p>
+            <p id="lookup-label" class="lookup-label">Game Lookup</p>
+            <input required id="lookup-id" class="lookup-id" type="number" min="1">
+            <button type="submit" id="lookup-submit" class="lookup-submit">Lookup</button>
+            <div id="lookup-display" class="lookup-display col-12">
+              <div class="lookup-button lookup-cell-1" data-display-index="0"></div>
+              <div class="lookup-button lookup-cell-2" data-display-index="1"></div>
+              <div class="lookup-button lookup-cell-3" data-display-index="2"></div>
+              <div class="lookup-button lookup-cell-4" data-display-index="3"></div>
+              <div class="lookup-button lookup-cell-5" data-display-index="4"></div>
+              <div class="lookup-button lookup-cell-6" data-display-index="5"></div>
+              <div class="lookup-button lookup-cell-7" data-display-index="6"></div>
+              <div class="lookup-button lookup-cell-8" data-display-index="7"></div>
+              <div class="lookup-button lookup-cell-9" data-display-index="8"></div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </body>
+</html>
